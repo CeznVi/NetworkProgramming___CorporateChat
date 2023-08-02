@@ -1,0 +1,51 @@
+﻿<Window x:Class="WpfUPD_SimpleChat__008.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WpfUPD_SimpleChat__008"
+        mc:Ignorable="d"
+        Title="SimpleUPD chat" Height="450" Width="400">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Grid Background="#FF00EDFF">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="120"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <Label Content="IpAdress" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20"></Label>
+            <TextBox Grid.Row="0" Grid.Column="1" Background="Azure" FontSize="20" Margin="5" x:Name="TextBox_RemoteIp"></TextBox>
+
+            <Label Grid.Row="1" Content="Remote Port" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20"></Label>
+            <TextBox Grid.Row="1" Grid.Column="1" Background="Azure" FontSize="20" Margin="5" x:Name="TextBox_RemotePort"></TextBox>
+
+            <Label Grid.Row="2" Content="Local Port" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20"></Label>
+            <TextBox Grid.Row="2" Grid.Column="1" Background="Azure" FontSize="20" Margin="5" x:Name="TextBox_LocalPort"></TextBox>
+
+            <StackPanel Grid.Row="3" Grid.Column="0" Orientation="Horizontal">
+                <Button Background="LightGreen" FontSize="18" Padding ="5" Margin="5" x:Name="Btn_sendMessage" RenderTransformOrigin="0.5,0.5" Click="Btn_sendMessage_Click">
+                    Send</Button>
+                <Button Background="LightGreen" FontSize="18" Padding ="5" Margin="5" x:Name="Btn_Listen" RenderTransformOrigin="0.5,0.5" Click="Btn_Listen_Click">
+                    Listen</Button>
+            </StackPanel>
+
+            <TextBox Grid.Row="3" Grid.Column="1" Background="Azure" FontSize="20" Margin="5" x:Name="TextBox_Message"></TextBox>
+
+
+        </Grid>
+        
+        <ListBox x:Name="ListBox_Chat" Grid.Row="1" Background="Azure"></ListBox>
+        
+    
+    </Grid>
+    
+</Window>
