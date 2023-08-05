@@ -23,6 +23,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WpfUPD_SimpleChat__008", "W
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HW_Server", "HW_Server\HW_Server.csproj", "{46F3968E-B265-4C9D-9E4B-BB77BA8A09CE}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HW_Client", "HW_Client\HW_Client.csproj", "{63B4E3C1-ECA1-4A48-B42D-BD0738B6B83C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -69,6 +71,10 @@ Global
 		{46F3968E-B265-4C9D-9E4B-BB77BA8A09CE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{46F3968E-B265-4C9D-9E4B-BB77BA8A09CE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{46F3968E-B265-4C9D-9E4B-BB77BA8A09CE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{63B4E3C1-ECA1-4A48-B42D-BD0738B6B83C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{63B4E3C1-ECA1-4A48-B42D-BD0738B6B83C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{63B4E3C1-ECA1-4A48-B42D-BD0738B6B83C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{63B4E3C1-ECA1-4A48-B42D-BD0738B6B83C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
