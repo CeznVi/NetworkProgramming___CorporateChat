@@ -5,31 +5,39 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:HW_Client"
         mc:Ignorable="d"
-        Title="Корпоративный чат корпорации РОГА И КОПЫТА" Height="450" Width="800" Icon="/ChatIcon.png">
+        Title="Корпоративный чат корпорации РОГА И КОПЫТА" Height="480" Width="800" Icon="/ChatIcon.png" ResizeMode="CanMinimize">
     <Grid Background="#FFBEBDC3">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition/>
+            <ColumnDefinition Width="84*"/>
+            <ColumnDefinition Width="17*"/>
+            <ColumnDefinition Width="27*"/>
             <ColumnDefinition Width="160"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="40"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
-        <WrapPanel Grid.Row="0" Grid.Column="0" x:Name="WrapPanel_ServiceMenu" Background="#FFBEBDC3">
+        <WrapPanel Grid.Row="0" Grid.Column="0" x:Name="WrapPanel_ServiceMenu" Background="#FFBEBDC3" Grid.ColumnSpan="3">
             <Label HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="Segoe UI Black" FontSize="14" Margin="0,5,0,0">Ваше имя:</Label>
             <TextBox Width="130" x:Name="TextBox_NickName" VerticalContentAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="Segoe UI Semibold" FontSize="14" Margin="0,5,0,0">sdasdasd</TextBox>
             <Button x:Name="Button_Connect" FontFamily="Segoe UI Black" Background="Green" Margin="60,5,0,0" Width="119">Подключится</Button>
         </WrapPanel>
-        
-        <StackPanel Grid.Row="0" Grid.Column="1" Grid.RowSpan="2" x:Name="StackPanel_ChatList">
-            <Label FontFamily="Segoe UI Semibold" FontSize="14" VerticalAlignment="Top" HorizontalAlignment="Center">Доступные чаты</Label>
+
+        <StackPanel Grid.Row="0" Grid.Column="3" Grid.RowSpan="2" x:Name="StackPanel_ChatList">
+            <Label FontFamily="Segoe UI Semibold" FontSize="14" VerticalAlignment="Bottom" HorizontalAlignment="Center" Margin="0,0,0,11.3">Доступные чаты</Label>
             <ListBox x:Name="ListBox_AviableChatList" FontFamily="Segoe UI Light" Height="360"></ListBox>
         </StackPanel>
 
-        <StackPanel Grid.Column="0" Grid.Row="1" x:Name="StackPanel_Chat">
+        <StackPanel Grid.Column="0" Grid.Row="1" x:Name="StackPanel_Chat" Grid.ColumnSpan="3">
             <ListBox x:Name="ListBox_Chat" FontFamily="Segoe UI Light" Height="300" Margin="10,0,12,0"></ListBox>
-            
+
+            <WrapPanel x:Name="WrapPanel_TypingMessage" Margin="10, 20, 12, 0">
+                <TextBox x:Name="TextBox_InputMessageBox" FontFamily="Segoe UI Light" Height="70" Width="507" ></TextBox>
+                <Button x:Name="Button_SendMessage" FontFamily="Segoe UI Black" Background="#FF6F6F6F" Width="85" Content="Отправить"/>
+            </WrapPanel>
+
+
         </StackPanel>
-        
+
     </Grid>
 </Window>
