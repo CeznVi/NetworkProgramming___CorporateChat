@@ -49,9 +49,10 @@ namespace WpfTCP_Client_006
                 if (client.Connected)
                 {
                     byte[] byteMessage = Encoding.UTF8.GetBytes(TextBox_Message.Text);
+                    
                     NetworkStream networkStream = client.GetStream();
                     networkStream.Write(byteMessage, 0, byteMessage.Length);
-
+                    
                     TextBox_Message.Text = String.Empty;
                     client.Close();
                 }
