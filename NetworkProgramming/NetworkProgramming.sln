@@ -25,6 +25,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HW_Server", "HW_Server\HW_S
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HW_Client", "HW_Client\HW_Client.csproj", "{63B4E3C1-ECA1-4A48-B42D-BD0738B6B83C}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "HW", "HW", "{5D901F37-3D11-41A9-8358-BA584739E684}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -78,6 +80,10 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{46F3968E-B265-4C9D-9E4B-BB77BA8A09CE} = {5D901F37-3D11-41A9-8358-BA584739E684}
+		{63B4E3C1-ECA1-4A48-B42D-BD0738B6B83C} = {5D901F37-3D11-41A9-8358-BA584739E684}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {6661EC9F-BB77-4E5F-A06E-108783691F89}
