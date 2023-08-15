@@ -1,34 +1,24 @@
 ﻿using HW_Server.Entity;
 using System;
 using System.Collections.Concurrent;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Net;
-using System.Net.Http;
 using System.Net.Sockets;
 using System.Runtime.Serialization.Formatters.Binary;
-using System.Text;
-using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
-namespace HW_Server
+namespace HW_ServerONCallback
 {
     /// <summary>
-    /// Логика взаимодействия для MainWindow.xaml
+    /// Interaction logic for MainWindow.xaml
     /// </summary>
     public partial class MainWindow : Window
     {
-        private TcpListener _tcpListener;
+        private TcpListener? _tcpListener;
+        private bool isNeedStop = false;
+
 
         private static readonly ConcurrentDictionary<string, ServerContext> userDictionary =
             new ConcurrentDictionary<string, ServerContext>();
@@ -36,7 +26,7 @@ namespace HW_Server
         public MainWindow()
         {
             InitializeComponent();
-            
+
         }
 
         private void Button_ControlServer_Click(object sender, RoutedEventArgs e)
@@ -51,11 +41,11 @@ namespace HW_Server
         /// <summary>
         /// Запустить сервер
         /// </summary>
-        private void StartServer()
+        private async void StartServer()
         {
-            
-            try
-            {
+
+                try
+                {
                 if (_tcpListener == null)
                 {
                     IPEndPoint iPEndPoint = new IPEndPoint(IPAddress.Any, 54000);
@@ -69,28 +59,32 @@ namespace HW_Server
                     Label_ServerInf0.Content = "Сервер запущен";
                     ///Изменения интерфейса --------------------------------------  КОНЕЦ
 
-                    while (true)
+                    await Task.Run(() =>
                     {
-                        _tcpListener.BeginAcceptTcpClient(
-                            new AsyncCallback(DoBeginAcceptTcpClient),
-                            _tcpListener
-                        );
-                    }
+                        while (!isNeedStop)
+                        {
+                            _tcpListener.BeginAcceptTcpClient(
+                                new AsyncCallback(DoBeginAcceptTcpClient),
+                                _tcpListener
+                            );
+                        }
+                    });
                 }
 
-            }
-            catch (FormatException fex)
-            {
-                MessageBox.Show(fex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-            }
-            finally
-            {
-                StopServer();
-            }
+                }
+                catch (FormatException fex)
+                {
+                    MessageBox.Show(fex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+                finally
+                {
+                    StopServer();
+                }
+
         }
 
         /// <summary>
@@ -100,8 +94,12 @@ namespace HW_Server
         {
             try
             {
-                _tcpListener.Stop();
-                _tcpListener = null;
+                if (_tcpListener != null)
+                {
+                    isNeedStop = true;
+                    _tcpListener.Stop();
+                    _tcpListener = null;
+                }
 
                 ///Изменения интерфейса --------------------------------------  НАЧАЛО
                 Button_ControlServer.Background = Brushes.Green;
@@ -124,9 +122,9 @@ namespace HW_Server
 
         private static void DoBeginAcceptTcpClient(IAsyncResult ar)
         {
-           
+
             TcpListener? listener = ar.AsyncState as TcpListener;
-            
+
             if (listener == null)
                 return;
 
@@ -143,15 +141,15 @@ namespace HW_Server
 
         private static void DoBeginRead(IAsyncResult ar)
         {
-            ServerContext context = ar.AsyncState as ServerContext;
-            
+            ServerContext? context = ar.AsyncState as ServerContext;
+
             if (context == null)
                 return;
 
             try
             {
                 int read = context.Stream.EndRead(ar);
-                
+
                 if (read == 0)
                 {
                     context.Client.Close();
@@ -166,8 +164,7 @@ namespace HW_Server
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.Message);
-
+                MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 context?.Client.Close();
                 context?.Stream.Dispose();
                 context = null;
@@ -187,9 +184,9 @@ namespace HW_Server
             MemoryStream memStream = new MemoryStream(context.Buffer);
             BinaryFormatter formatter = new BinaryFormatter();
 
-#pragma warning disable SYSLIB0011 // Danger: BinaryFormatter.Deserialize is insecure for untrusted input
+    #pragma warning disable SYSLIB0011 // Danger: BinaryFormatter.Deserialize is insecure for untrusted input
             Message m = (Message)formatter.Deserialize(memStream);
-#pragma warning restore SYSLIB0011
+    #pragma warning restore SYSLIB0011
 
             if (m.MT == MessageType.LOGIN)
             {
@@ -229,3 +226,4 @@ namespace HW_Server
 
     }
 }
+

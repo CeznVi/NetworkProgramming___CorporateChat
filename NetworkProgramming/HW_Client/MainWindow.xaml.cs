@@ -1,18 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+using System.Net;
+using System.Net.Sockets;
 using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace HW_Client
 {
@@ -33,7 +25,18 @@ namespace HW_Client
         /// Шаблон правильного ника для RegeX выражения
         /// </summary>
         private string regexTemplateCorectNick = @"^[A-Za-z0-9_-]{3,15}$";
-
+        /// <summary>
+        /// Клиент подключения к серверу
+        /// </summary>
+        private TcpClient _client;
+        /// <summary>
+        /// Адрес сервера
+        /// </summary>
+        private string _ipAdressSever = "127.0.0.1";
+        /// <summary>
+        /// Порт сервера
+        /// </summary>
+        private int _portServer = 54000;
 
 
         ////// -------------------  КОНСТРУКТОР
@@ -64,7 +67,6 @@ namespace HW_Client
             else if(_isConnect == true && _isCorectNick == true) 
             {
 
-
                 Button_Connect.Content = "Подключиться";
                 Button_Connect.Background = Brushes.Green;
                 TextBox_NickName.IsEnabled = true;
@@ -83,7 +85,62 @@ namespace HW_Client
         /// </summary>
         private void Connect()
         {
-            
+            try
+            {
+                _client = new TcpClient();
+
+                IPAddress iPAddress = IPAddress.Parse(_ipAdressSever);
+                
+                _client.Connect(new IPEndPoint(iPAddress, _portServer));
+
+                if (_client.Connected)
+                {
+                    _isConnect = true;
+                    
+                    //Передаем на сервер ник подключенного клиента
+                    byte[] byteMessage = Encoding.UTF8.GetBytes($"{TextBox_NickName.Text}");
+                    NetworkStream networkStream = _client.GetStream();
+                    networkStream.Write(byteMessage, 0, byteMessage.Length);
+
+
+
+
+
+
+
+
+
+                  
+
+
+
+                    //byte[] byteMessage = Encoding.UTF8.GetBytes(TextBox_Message.Text);
+
+                    //NetworkStream networkStream = client.GetStream();
+                    //networkStream.Write(byteMessage, 0, byteMessage.Length);
+
+                    //TextBox_Message.Text = String.Empty;
+                    //client.Close();
+                }
+
+            }
+            catch (FormatException fex)
+            {
+                MessageBox.Show(fex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            ////////////! ТЕСТ
+            finally
+            {
+                if (_client.Connected)
+                {
+                    _client.Close();
+                    _isConnect = false;
+                }
+            }
         }
 
         /// <summary>
