@@ -1,4 +1,5 @@
-﻿using System.Net;
+﻿using System;
+using System.Net;
 using System.Net.Sockets;
 using System.Text.RegularExpressions;
 using System.Windows;
@@ -84,6 +85,20 @@ namespace Client
         /// </summary>
         private void Connect()
         {
+            try
+            {           
+                Client.Entity.Client.RunClient(IP, PORT);
+
+            }
+            catch (FormatException fex)
+            {
+                MessageBox.Show(fex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+
 
             //try
             //{
@@ -98,11 +113,8 @@ namespace Client
             //        _isConnect = true;
 
             //        //Передаем на сервер ник подключенного клиента
-            //        ///($"{TextBox_NickName.Text}");
-
-
+            //        ///($"{TextBox_NickName.Text}");]
             //    }
-
             //}
             //catch (FormatException fex)
             //{
