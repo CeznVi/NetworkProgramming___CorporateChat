@@ -1,15 +1,15 @@
-﻿using System;
-using System.Net;
+﻿using System.Net;
 using System.Net.Sockets;
-using System.Text;
 using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Media;
+using Client.Entity;
 
-namespace HW_Client
+
+namespace Client
 {
     /// <summary>
-    /// Логика взаимодействия для MainWindow.xaml
+    /// Interaction logic for MainWindow.xaml
     /// </summary>
     public partial class MainWindow : Window
     {
@@ -28,16 +28,15 @@ namespace HW_Client
         /// <summary>
         /// Клиент подключения к серверу
         /// </summary>
-        private TcpClient _client;
+        private TcpClient? _client;
         /// <summary>
         /// Адрес сервера
         /// </summary>
-        private string _ipAdressSever = "127.0.0.1";
+        private static readonly IPAddress IP = IPAddress.Parse("127.0.0.1");
         /// <summary>
         /// Порт сервера
         /// </summary>
-        private int _portServer = 8888;
-
+        private static readonly int PORT = 8888;
 
         ////// -------------------  КОНСТРУКТОР
         public MainWindow()
@@ -46,7 +45,7 @@ namespace HW_Client
         }
 
         ////// ------------------ МЕТОДЫ взаимодействия с интерфейсом ================= НАЧАЛО
-        
+
 
         private void Button_Connect_Click(object sender, RoutedEventArgs e)
         {
@@ -54,7 +53,7 @@ namespace HW_Client
             CheckForCorectNick();
 
 
-            if(_isConnect == false && _isCorectNick == true) 
+            if (_isConnect == false && _isCorectNick == true)
             {
 
                 Button_Connect.Content = "Отключться";
@@ -62,9 +61,9 @@ namespace HW_Client
                 TextBox_NickName.IsEnabled = false;
                 _isConnect = true;
                 Connect();
-                
+
             }
-            else if(_isConnect == true && _isCorectNick == true) 
+            else if (_isConnect == true && _isCorectNick == true)
             {
 
                 Button_Connect.Content = "Подключиться";
@@ -79,48 +78,49 @@ namespace HW_Client
 
 
         ////// ------------------ МЕТОДЫ взаимодействия с сервером ================= НАЧАЛО
-        
+
         /// <summary>
         /// Подключится к серверу
         /// </summary>
         private void Connect()
         {
-            try
-            {
-                _client = new TcpClient();
 
-                IPAddress iPAddress = IPAddress.Parse(_ipAdressSever);
-                
-                _client.Connect(new IPEndPoint(iPAddress, _portServer));
+            //try
+            //{
+            //    _client = new TcpClient();
 
-                if (_client.Connected)
-                {
-                    _isConnect = true;
-                    
-                    //Передаем на сервер ник подключенного клиента
-                        ///($"{TextBox_NickName.Text}");
+            //    IPAddress iPAddress = IPAddress.Parse(_ipAdressSever);
+
+            //    _client.Connect(new IPEndPoint(iPAddress, _portServer));
+
+            //    if (_client.Connected)
+            //    {
+            //        _isConnect = true;
+
+            //        //Передаем на сервер ник подключенного клиента
+            //        ///($"{TextBox_NickName.Text}");
 
 
-                }
+            //    }
 
-            }
-            catch (FormatException fex)
-            {
-                MessageBox.Show(fex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-            }
-            ////////////! ТЕСТ
-            finally
-            {
-                if (_client.Connected)
-                {
-                    _client.Close();
-                    _isConnect = false;
-                }
-            }
+            //}
+            //catch (FormatException fex)
+            //{
+            //    MessageBox.Show(fex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            //}
+            //catch (Exception ex)
+            //{
+            //    MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            //}
+            //////////////! ТЕСТ
+            //finally
+            //{
+            //    if (_client.Connected)
+            //    {
+            //        _client.Close();
+            //        _isConnect = false;
+            //    }
+            //}
         }
 
         /// <summary>
@@ -139,7 +139,10 @@ namespace HW_Client
 
         }
 
+
+
         ////// ------------------ МЕТОДЫ взаимодействия с сервером ================= КОНЕЦ
+
 
     }
 }
